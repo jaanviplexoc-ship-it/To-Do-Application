@@ -25,12 +25,31 @@ function App() {
     );
   };
 
+  const editTodo = (todoId, updatedText) => {
+    setTodos((previousTodos) => 
+    previousTodos.map((todo) => 
+    todo.id === todoId ? {
+      ...todo,
+      text: updatedText,
+      completed: false,
+    } : todo)
+  );
+
+  };
+
+  const deleteTodo = (todoId) => {
+    setTodos((previousTodos) => 
+    previousTodos.filter((todo)=>
+    todo.id !== todoId)
+    );
+  };
+
   return (
     <div>
       <Navbar />
       <Routes>
         <Route 
-        path="/TodoDashbord" 
+        path="/" 
         element={<TodoDashbord todos={todos}/>} 
         />
 
@@ -45,7 +64,9 @@ function App() {
         path="/TodoList" 
         element={<TodoList 
         todos={todos}
-        onToggleTodo={toggleTodo}/>} 
+        onToggleTodo={toggleTodo}
+        onEditTodo={editTodo}
+        onDeleteTodo={deleteTodo} />} 
         />
 
       </Routes>
