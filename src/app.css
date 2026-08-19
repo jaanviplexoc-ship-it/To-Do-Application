@@ -1,0 +1,333 @@
+/* ==========================================
+   TODO APP - App.css
+   Simple styling using Cream, Brown & Black theme
+   ========================================== */
+
+/* ---------- Basic Reset ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: #f2e8d5; /* cream background */
+  font-family: 'Segoe UI', Arial, sans-serif;
+  color: #1a1a1a; /* near black text */
+}
+
+h1, h2, h3 {
+  margin: 0 0 10px 0;
+  color: #1a1a1a;
+}
+
+p {
+  margin: 0;
+  color: #4a3c2e; /* soft brown text */
+}
+
+/* ---------- Navbar ---------- */
+nav {
+  background-color: #fdf8ee;
+  padding: 15px 30px;
+  border-bottom: 2px solid #6b4423;
+}
+
+nav a {
+  color: #6b4423; /* brown */
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 10px;
+  padding: 6px 10px;
+  border-radius: 5px;
+}
+
+nav a:hover {
+  background-color: #e9dcc0;
+}
+
+/* ---------- Buttons ---------- */
+
+.add-todo-btn {
+  background-color: #6b4423; /* brown */
+  color: #fdf8ee;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.add-todo-btn:hover {
+  background-color: #4a2e17; /* darker brown */
+}
+
+/* ---------- Dashboard Page ---------- */
+.todo-dashboard {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.dashboard-header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #cdb98f;
+}
+
+.dashboard-header h1 {
+  font-size: 30px;
+}
+
+.dashboard-header p {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.dashboard-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.stat-card,
+.stat-card-clickable {
+  background-color: #fdf8ee;
+  border: 1px solid #cdb98f;
+  border-radius: 10px;
+  padding: 20px;
+  flex: 1;
+  min-width: 180px;
+}
+
+.stat-card h3,
+.stat-card-clickable h3 {
+  font-size: 14px;
+  color: #8c7a63;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.stat-card span,
+.stat-card-clickable span {
+  font-size: 32px;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+.stat-card-clickable {
+  cursor: pointer;
+}
+
+.stat-card-clickable:hover {
+  background-color: #e9dcc0;
+}
+
+
+
+/* ---------- Todo Form Page ---------- */
+.todo-form-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.todo-form-header {
+  margin-bottom: 25px;
+}
+
+.todo-form-header h1 {
+  font-size: 26px;
+}
+
+.todo-form {
+  background-color: #fdf8ee;
+  border: 1px solid #cdb98f;
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: #4a3c2e;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cdb98f;
+  border-radius: 6px;
+  font-size: 15px;
+  background-color: #fff;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #6b4423;
+}
+
+.form-todo-list {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px dashed #cdb98f;
+}
+
+.form-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.form-list-header h2 {
+  font-size: 18px;
+}
+
+.form-list-header span {
+  background-color: #e9dcc0;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.empty-message {
+  color: #8c7a63;
+  font-style: italic;
+}
+
+.form-task-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-task-item {
+  background-color: #fff;
+  border: 1px solid #e2d3b4;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 14px;
+}
+
+.task-completed {
+  text-decoration: line-through;
+  color: #8c7a63;
+}
+
+/* ---------- Todo List Page ---------- */
+.todo-list-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.todo-list-header {
+  margin-bottom: 20px;
+}
+
+.todo-list-header h1 {
+  font-size: 26px;
+}
+
+.todo-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.todo-filters label {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.todo-filters select {
+  padding: 8px 12px;
+  border: 1px solid #cdb98f;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.todo-list-summary {
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #8c7a63;
+}
+
+/* Empty state */
+.empty-todo-state {
+  text-align: center;
+  background-color: #fdf8ee;
+  border: 1px dashed #cdb98f;
+  border-radius: 10px;
+  padding: 40px 20px;
+}
+
+.empty-todo-state h2 {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+/* Todo Grid */
+.todo-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: #fdf8ee;
+  border: 1px solid #cdb98f;
+  border-radius: 8px;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+
+.todo-item:hover {
+  background-color: #e9dcc0;
+}
+
+.todo-item input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #6b4423; /* makes checkbox brown when checked */
+  cursor: pointer;
+}
+
+.todo-text {
+  font-size: 15px;
+  color: #1a1a1a;
+}
+
+.todo-item.completed {
+  background-color: #f7eddc;
+}
+
+.todo-item.completed .todo-text {
+  text-decoration: line-through;
+  color: #8c7a63;
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 600px) {
+  .dashboard-stats {
+    flex-direction: column;
+  }
+
+  .todo-form {
+    padding: 15px;
+  }
+}

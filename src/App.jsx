@@ -1,34 +1,58 @@
-import { useState } from 'react'
-import ContactForm from './component/ContactForm'
-import ContactList from './component/ContactList';
+import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Navbar from './component/Navbar';
+
+import TodoList from './component/TodoList';
+import TodoForm from './component/TodoForm';
+import TodoDashbord from './component/TodoDashbord';
+
+import "./app.css";
 
 function App() {
 
-  const [contacts,setContact] = useState([]);
-  const [showList,setShowList] = useState(false);
+  const [todos, setTodos] = useState([]);
 
-  function addContact(newContact){
-    setContact([...contacts,newContact]);
-  }
+  const addTodo = (newTodo) => {
+    setTodos ((previousTodos) => [...previousTodos,newTodo]);
+  };
 
-  function handleView(){
-    setShowList(true)
-  }
+  //toggle todo
+
+  const toggleTodo = (todoId) =>{
+    setTodos((previousTodos) => 
+      previousTodos.map((todo) => 
+      todo.id === todoId ? {...todo, completed : !todo.completed} : todo)
+    );
+  };
 
   return (
-    <>
-      <ContactForm onAddContact={addContact}/>
+    <div>
+      <Navbar />
+      <Routes>
+        <Route 
+        path="/TodoDashbord" 
+        element={<TodoDashbord todos={todos}/>} 
+        />
 
-      <button onClick={handleView}>
-        View Contact
-      </button>
+        <Route 
+        path="/TodoForm" 
+        element={<TodoForm
+          todos={todos}
+          onAddTodo={addTodo} />} 
+        />
 
-      
-      {showList && (
-        <ContactList contacts={contacts} />
-      )}
-    </>
+        <Route 
+        path="/TodoList" 
+        element={<TodoList 
+        todos={todos}
+        onToggleTodo={toggleTodo}/>} 
+        />
+
+      </Routes>
+
+    </div>
   )
-}
+  
+};
 
-export default App
+export default App;
