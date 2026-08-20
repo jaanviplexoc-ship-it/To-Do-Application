@@ -1,16 +1,22 @@
-import React, { useMemo, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import React, { useMemo } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-function TodoList({ todos = [], onToggleTodo, onDeleteTodo, onEditTodo }) {
+function TodoList({
+  todos = [],
+  onToggleTodo,
+  onDeleteTodo,
+}) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [editingTodoId, setEditingTodoId] = useState(null);
-  const [editText, setEditText] = useState("");
-  const [deleteTodoId, setDeleteTodoId] = useState(null);
+
+  const navigate = useNavigate();
+
+  const [deleteTodoId, setDeleteTodoId] = React.useState(null);
 
   const statusFromUrl = searchParams.get("status");
 
   const activeFilter =
-    statusFromUrl === "pending" || statusFromUrl === "completed"
+    statusFromUrl === "pending" ||
+      statusFromUrl === "completed"
       ? statusFromUrl
       : "all";
 
@@ -41,42 +47,19 @@ function TodoList({ todos = [], onToggleTodo, onDeleteTodo, onEditTodo }) {
     onToggleTodo(todoId);
   };
 
-  // editing mode
+  // Open edit page
 
   const handleEditStart = (todo) => {
-    setEditingTodoId(todo.id);
-    setEditText(todo.text);
+    navigate(`/TodoForm?edit=${todo.id}`);
   };
 
-  // save edited todo
-
-  const handleEditSave = (todoId) => {
-    const trimmedText = editText.trim();
-
-    if (!trimmedText) {
-      return;
-    }
-
-    onEditTodo(todoId, trimmedText);
-
-    setEditingTodoId(null);
-    setEditText("");
-  };
-
-  //Edit cancle
-
-  const handleEditCancel = () => {
-    setEditingTodoId(null);
-    setEditText("");
-  };
-
-  //open delete confirmation
+  // Open delete confirmation
 
   const handleDeleteStart = (todoId) => {
     setDeleteTodoId(todoId);
   };
 
-  //confirm delete
+  // Confirm delete
 
   const handleDeleteConfirm = () => {
     if (deleteTodoId === null) {
@@ -84,10 +67,11 @@ function TodoList({ todos = [], onToggleTodo, onDeleteTodo, onEditTodo }) {
     }
 
     onDeleteTodo(deleteTodoId);
+
     setDeleteTodoId(null);
   };
 
-  //cancle delete
+  // Cancel delete
 
   const handleDeleteCancel = () => {
     setDeleteTodoId(null);
@@ -98,16 +82,24 @@ function TodoList({ todos = [], onToggleTodo, onDeleteTodo, onEditTodo }) {
       <div className="todo-list-header">
         <h1>My Tasks</h1>
 
-        <p>Manage Your Tasks And Track your Progress.</p>
+        <p>
+          Manage Your Tasks And Track your Progress.
+        </p>
       </div>
 
+      {/* Filters */}
+
       <div className="todo-filters">
-        <label htmlFor="task-filter">Filter Tasks</label>
+        <label htmlFor="task-filter">
+          Filter Tasks
+        </label>
 
         <select
           id="task-filter"
           value={activeFilter}
-          onChange={(event) => handleFilterChange(event.target.value)}
+          onChange={(event) =>
+            handleFilterChange(event.target.value)
+          }
         >
           <option value="all">All</option>
 
@@ -117,7 +109,7 @@ function TodoList({ todos = [], onToggleTodo, onDeleteTodo, onEditTodo }) {
         </select>
       </div>
 
-      {/* task count */}
+      {/* Task Count */}
 
       <div className="todo-list-summary">
         <span>
@@ -126,101 +118,109 @@ function TodoList({ todos = [], onToggleTodo, onDeleteTodo, onEditTodo }) {
         </span>
       </div>
 
-      {/* todo grid */}
+      {/* Todo Table */}
 
       {filteredTodos.length === 0 ? (
         <div className="empty-todo-state">
           <h2>No Tasks Found</h2>
-          <p>There are no tasks in this category.</p>
+
+          <p>
+            There are no tasks in this category.
+          </p>
         </div>
       ) : (
-        <div className="todo-grid">
-          {filteredTodos.map((todo) => (
-            <div
-              key={todo.id}
-              className={`todo-item ${todo.completed ? "completed" : ""}`}
-              onClick={() => {
-                if (editingTodoId !== todo.id) {
-                  handleTodoClick(todo.id);
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(event) => {
-                if (editingTodoId === todo.id) {
-                  return;
-                }
+        <div className="todo-table-container">
+          <table className="todo-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
 
-                if (event.key === "Enter" || event.key === " ") {
-                  handleTodoClick(todo.id);
-                }
-              }}
-            >
-              {/* Task Content */}
+            <tbody>
+              {filteredTodos.map((todo, index) => (
+                <tr
+                  key={todo.id}
+                  className={
+                    todo.completed ? "completed" : ""
+                  }
+                >
+                  {/* ID */}
 
-              <div className="todo-content">
-                <input
-                  type="checkbox"
-                  checked={todo.completed}
-                  onChange={() => handleTodoClick(todo.id)}
-                  onClick={(event) => event.stopPropagation()}
-                  disabled={editingTodoId === todo.id}
-                  aria-label={`Mark "${todo.text}" as ${
-                    todo.completed ? "pending" : "completed"
-                  }`}
-                />
+                  <td className="todo-id">
+                    {index + 1}
+                  </td>
 
-                {editingTodoId === todo.id ? (
-                  <input
-                    type="text"
-                    value={editText}
-                    onChange={(event) => setEditText(event.target.value)}
-                    onClick={(event) => event.stopPropagation()}
-                    autoFocus
-                  />
-                ) : (
-                  <span className="todo-text">{todo.text}</span>
-                )}
-              </div>
+                  {/* Title */}
 
-              {/* Actions */}
+                  <td className="todo-title">
+                    {todo.text}
+                  </td>
 
-              <div
-                className="todo-actions"
-                onClick={(event) => event.stopPropagation()}
-              >
-                {editingTodoId === todo.id ? (
-                  <>
+                  {/* Description */}
+
+                  <td className="todo-description">
+                    {todo.description || "No description"}
+                  </td>
+
+                  {/* Status */}
+
+                  <td className="todo-status">
+                    <div className="status-wrapper">
+                      <input
+                        type="checkbox"
+                        checked={todo.completed}
+                        onChange={() =>
+                          handleTodoClick(todo.id)
+                        }
+                        aria-label={`Mark "${todo.text}" as ${todo.completed
+                            ? "pending"
+                            : "completed"
+                          }`}
+                      />
+
+                      <span>
+                        {todo.completed
+                          ? "Completed"
+                          : "Pending"}
+                      </span>
+                    </div>
+                  </td>
+
+                  {/* Actions */}
+
+                  <td className="todo-actions">
                     <button
                       type="button"
-                      onClick={() => handleEditSave(todo.id)}
-                    >
-                      Save
-                    </button>
+                      onClick={() =>
+                        handleEditStart(todo)
+                      }
 
-                    <button type="button" onClick={handleEditCancel}>
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button type="button" onClick={() => handleEditStart(todo)}>
+                    >
                       Edit
                     </button>
 
                     <button
                       type="button"
-                      onClick={() => handleDeleteStart(todo.id)}
+                      onClick={() =>
+                        handleDeleteStart(todo.id)
+                      }
                     >
                       Delete
                     </button>
-                  </>
-                )}
-              </div>
-            </div>
-          ))}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
+
+      {/* Delete Confirmation Modal */}
 
       {deleteTodoId !== null && (
         <div className="delete-modal-backdrop">
@@ -230,19 +230,27 @@ function TodoList({ todos = [], onToggleTodo, onDeleteTodo, onEditTodo }) {
             aria-modal="true"
             aria-labelledby="delete-modal-title"
           >
-            <h2 id="delete-modal-title">Delete Task?</h2>
+            <h2 id="delete-modal-title">
+              Delete Task?
+            </h2>
 
             <p>
-              Are you sure you want to delete this task? This action cannot be
-              undone.
+              Are you sure you want to delete this task?
+              This action cannot be undone.
             </p>
 
             <div className="delete-modal-actions">
-              <button type="button" onClick={handleDeleteCancel}>
+              <button
+                type="button"
+                onClick={handleDeleteCancel}
+              >
                 Cancel
               </button>
 
-              <button type="button" onClick={handleDeleteConfirm}>
+              <button
+                type="button"
+                onClick={handleDeleteConfirm}
+              >
                 Delete
               </button>
             </div>

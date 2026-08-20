@@ -1,7 +1,8 @@
-function TodoModel(text) {
+function TodoModel(text,description) {
     return {
         id: Date.now(),
         text: text,
+        description:description,
         completed: false
     };
 }

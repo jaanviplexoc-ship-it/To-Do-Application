@@ -23,7 +23,8 @@ function TodoDashbord({todos = []}) {
         </div>
 
         <div className='dashboard-stats'>
-            <div className='stat-card'>
+            <div className='stat-card'
+            onClick={() => navigate('/TodoList?status=all')}>
                 <h3>Total Tasks</h3>
                 <span>{totaltasks}</span>
             </div>

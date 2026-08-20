@@ -1,42 +1,105 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TodoModel from "../models/TodoModels";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-function AddTodo({ todos = [], onAddTodo }) {
+function TodoForm({ todos = [], onAddTodo, onEditTodo }) {
   const [todoText, setTodoText] = useState("");
+  const [todoDescription, setTodoDescription] = useState("");
+
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+
+  const editTodoId = searchParams.get("edit");
+
+  const isEditMode = editTodoId !== null;
+
+  const todoToEdit = todos.find(
+    (todo) => String(todo.id) === String(editTodoId)
+  );
+
+  const isCompletedTodo = todoToEdit?.completed === true;
+
+  // Load existing todo when edit mode starts
+
+  useEffect(() => {
+    if (!isEditMode) {
+      return;
+    }
+
+    // const todoToEdit = todos.find(
+    //   (todo) => String(todo.id) === String(editTodoId)
+    // );
+
+
+    if (todoToEdit) {
+      setTodoText(todoToEdit.text);
+      setTodoDescription(todoToEdit.description || "");
+    }
+  }, [todos, editTodoId, isEditMode]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     const trimmedText = todoText.trim();
+    const trimmedDescription = todoDescription.trim();
 
-    //not allow empty todo
+    // Don't allow empty todo
 
     if (!trimmedText) {
       alert("Don't allow empty Todo !!");
       return;
     }
 
-    // create new todo
-    const newTodo = TodoModel(trimmedText);
+    // Edit existing todo
+
+    if (isEditMode) {
+      const updatedDescription = isCompletedTodo
+      ? todoToEdit.description
+      : trimmedDescription;
+
+      onEditTodo(
+        Number(editTodoId),
+        trimmedText,
+        trimmedDescription
+      );
+
+      navigate("/TodoList");
+      return;
+    }
+
+    // Create new todo
+
+    const newTodo = TodoModel(
+      trimmedText,
+      trimmedDescription
+    );
 
     onAddTodo(newTodo);
 
-    //settodo empty after adding new todo
+    // Clear form
 
     setTodoText("");
+    setTodoDescription("");
   }
 
   return (
     <div className="todo-form-page">
       <div className="todo-form-header">
-        <h1>Add Todo</h1>
+        <h1>{isEditMode ? "Edit Todo" : "Add Todo"}</h1>
 
-        <p>Create a new task and keep your work organized.</p>
+        <p>
+          {isEditMode
+            ? "Update your task and keep your work organized."
+            : "Create a new task and keep your work organized."}
+        </p>
       </div>
 
       <form className="todo-form" onSubmit={handleSubmit}>
+        {/* Title */}
+
         <div className="form-group">
           <label htmlFor="formText">Task</label>
+
           <input
             id="formText"
             type="text"
@@ -46,51 +109,41 @@ function AddTodo({ todos = [], onAddTodo }) {
           />
         </div>
 
+        {/* Description */}
+
+        <div className="form-group">
+          <label htmlFor="formDescription">
+            Description
+          </label>
+
+          <textarea
+            id="formDescription"
+            value={todoDescription}
+            onChange={(e) =>
+              setTodoDescription(e.target.value)
+            }
+            placeholder="Describe your task..."
+            rows="6"
+            disabled={isCompletedTodo}
+          />
+        </div>
+
         <button type="submit" className="add-todo-btn">
-          Add Todo
+          {isEditMode ? "Save Changes" : "Add Todo"}
         </button>
 
         {/* Current Tasks */}
+
         <div className="form-todo-list">
+          <div className="form-list-header">
+            <h2>Current Tasks</h2>
 
-            <div className="form-list-header">
-                <h2>Current Tasks</h2>
-
-                <span>
-                    {todos.length}
-                </span>
-            </div>
-
-
-            {todos.length === 0 ? (
-
-                <p className="empty-message">
-                    No tasks added yet.
-                </p>
-
-            ) : (
-
-                <div className="current-task-list">
-
-                    {todos.map((todo) => (
-
-                        <div
-                            className="current-task-item"
-                            key={todo.id}
-                        >
-                            {todo.text}
-                        </div>
-
-                    ))}
-
-                </div>
-
-            )}
-
+            <span>{todos.length}</span>
+          </div>
         </div>
       </form>
     </div>
   );
 }
 
-export default AddTodo;
+export default TodoForm;
