@@ -134,13 +134,13 @@ function TodoForm({ todos = [], onAddTodo, onEditTodo }) {
 
         {/* Current Tasks */}
 
-        <div className="form-todo-list">
+        {/* <div className="form-todo-list">
           <div className="form-list-header">
             <h2>Current Tasks</h2>
 
             <span>{todos.length}</span>
           </div>
-        </div>
+        </div> */}
       </form>
     </div>
   );
