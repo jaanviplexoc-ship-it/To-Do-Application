@@ -1,3 +1,7 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,8 +10,8 @@
 
 body {
   font-family: Inter, "Segoe UI", Arial, sans-serif;
-  background: #f5f7fb;
-  color: #1f2937;
+  background: #f2e8d5;
+  color: #1a1a1a;
 }
 
 button,
@@ -26,39 +30,16 @@ a {
   color: inherit;
 }
 
-nav a {
-  position: relative;
-}
 
-nav a::after {
-  content: "";
-
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-
-  width: 0;
-  height: 2px;
-
-  background: #2563eb;
-
-  transform: translateX(-50%);
-
-  transition: width 0.25s ease;
-}
-
-nav a.active {
-  color: #2563eb;
-}
-
-nav a.active::after {
-  width: 70%;
-}
+/* =========================================================
+   NAVBAR
+========================================================= */
 
 nav {
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 100;
+  left: 0;
 
   display: flex;
   align-items: center;
@@ -68,17 +49,20 @@ nav {
   min-height: 64px;
   padding: 12px 24px;
 
-  background: #ffffff;
-  border-bottom: 1px solid #e5e7eb;
-  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.05);
+  background: #fdf8ee;
+  border-bottom: 2px solid #6b4423;
+
+  box-shadow: 0 2px 10px rgba(74, 46, 23, 0.08);
 }
 
 nav a {
+  position: relative;
+
   padding: 9px 15px;
 
   border-radius: 8px;
 
-  color: #64748b;
+  color: #6b4423;
   font-size: 14px;
   font-weight: 600;
 
@@ -88,12 +72,40 @@ nav a {
     transform 0.2s ease;
 }
 
-/* nav a:hover {
-  background: #eff6ff;
-  color: #2563eb;
+nav a:hover {
+  background: #e9dcc0;
+  color: #4a2e17;
   transform: translateY(-1px);
-} */
+}
 
+
+/* Active Navbar */
+
+nav a.active {
+  color: #4a2e17;
+}
+
+nav a.active::after {
+  content: "";
+
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+
+  width: 65%;
+  height: 2px;
+
+  background: #6b4423;
+
+  border-radius: 10px;
+
+  transform: translateX(-50%);
+}
+
+
+/* =========================================================
+   COMMON PAGE CONTAINER
+========================================================= */
 
 .todo-dashboard,
 .todo-form-page,
@@ -102,6 +114,10 @@ nav a {
   margin: 0 auto;
 }
 
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
 
 .todo-dashboard {
   padding: 50px 0;
@@ -113,20 +129,22 @@ nav a {
 .dashboard-header {
   padding: 38px;
 
-  background: #ffffff;
+  background: #fdf8ee;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid #cdb98f;
   border-radius: 18px;
 
-  box-shadow: 0 8px 30px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 8px 30px rgba(74, 46, 23, 0.07);
 
   margin-bottom: 28px;
+
+  text-align: center;
 }
 
 .dashboard-header h1 {
   margin-bottom: 12px;
 
-  color: #111827;
+  color: #1a1a1a;
   font-size: clamp(28px, 4vw, 42px);
   font-weight: 750;
   letter-spacing: -0.8px;
@@ -134,14 +152,17 @@ nav a {
 
 .dashboard-header p {
   max-width: 850px;
+  margin: 0 auto;
 
-  color: #64748b;
+  color: #4a3c2e;
   font-size: 15px;
   line-height: 1.8;
 }
 
 
-/* Dashboard Stats */
+/* =========================================================
+   DASHBOARD STATS
+========================================================= */
 
 .dashboard-stats {
   display: grid;
@@ -157,17 +178,18 @@ nav a {
 
   padding: 26px;
 
-  background: #ffffff;
+  background: #fdf8ee;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid #cdb98f;
   border-radius: 16px;
 
-  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.05);
+  box-shadow: 0 6px 20px rgba(74, 46, 23, 0.06);
 
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease,
-    border-color 0.25s ease;
+    border-color 0.25s ease,
+    background-color 0.25s ease;
 }
 
 .stat-card-clickable {
@@ -178,28 +200,37 @@ nav a {
 .stat-card-clickable:hover {
   transform: translateY(-5px);
 
-  border-color: #bfdbfe;
+  border-color: #8c7a63;
 
-  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.1);
+  background: #fffaf1;
+
+  box-shadow: 0 14px 30px rgba(74, 46, 23, 0.12);
 }
 
 .stat-card h3,
 .stat-card-clickable h3 {
   margin-bottom: 14px;
 
-  color: #64748b;
+  color: #8c7a63;
+
   font-size: 14px;
   font-weight: 650;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
 .stat-card span,
 .stat-card-clickable span {
   display: block;
 
-  color: #111827;
+  color: #1a1a1a;
+
   font-size: 34px;
   font-weight: 750;
 }
+
+
+/* Card accent */
 
 .stat-card::before,
 .stat-card-clickable::before {
@@ -214,15 +245,23 @@ nav a {
 
   border-radius: 16px 0 0 16px;
 
-  background: #2563eb;
+  background: #6b4423;
 }
+
+
+/* =========================================================
+   ADD BUTTON AREA
+========================================================= */
 
 .btn {
   display: flex;
   justify-content: flex-end;
 }
 
-   /* BUTTONS */
+
+/* =========================================================
+   BUTTONS
+========================================================= */
 
 .add-todo-btn {
   border: none;
@@ -230,13 +269,13 @@ nav a {
 
   padding: 12px 22px;
 
-  background: #2563eb;
-  color: #ffffff;
+  background: #6b4423;
+  color: #fdf8ee;
 
   font-size: 14px;
   font-weight: 650;
 
-  box-shadow: 0 5px 14px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 5px 14px rgba(107, 68, 35, 0.25);
 
   transition:
     background-color 0.2s ease,
@@ -245,18 +284,21 @@ nav a {
 }
 
 .add-todo-btn:hover {
-  background: #1d4ed8;
+  background: #4a2e17;
 
   transform: translateY(-2px);
 
-  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 8px 18px rgba(107, 68, 35, 0.3);
 }
 
 .add-todo-btn:active {
   transform: translateY(0);
 }
 
-   /* FORM PAGE */
+
+/* =========================================================
+   FORM PAGE
+========================================================= */
 
 .todo-form-page {
   padding: 50px 0;
@@ -267,12 +309,13 @@ nav a {
 
 .todo-form-header {
   margin-bottom: 25px;
+  text-align: center;
 }
 
 .todo-form-header h1 {
   margin-bottom: 8px;
 
-  color: #111827;
+  color: #1a1a1a;
 
   font-size: 32px;
   font-weight: 750;
@@ -280,12 +323,14 @@ nav a {
 }
 
 .todo-form-header p {
-  color: #64748b;
+  color: #4a3c2e;
   font-size: 15px;
 }
 
 
-/* Form */
+/* =========================================================
+   FORM
+========================================================= */
 
 .todo-form {
   width: min(760px, 100%);
@@ -293,13 +338,16 @@ nav a {
 
   padding: 32px;
 
-  background: #ffffff;
+  background: #fdf8ee;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid #cdb98f;
   border-radius: 18px;
 
-  box-shadow: 0 10px 35px rgba(15, 23, 42, 0.07);
+  box-shadow: 0 10px 35px rgba(74, 46, 23, 0.08);
 }
+
+
+/* Form Group */
 
 .form-group {
   margin-bottom: 22px;
@@ -310,23 +358,26 @@ nav a {
 
   margin-bottom: 8px;
 
-  color: #374151;
+  color: #4a3c2e;
 
   font-size: 14px;
   font-weight: 650;
 }
 
+
+/* Inputs */
+
 .form-group input,
 .form-group textarea {
   width: 100%;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid #cdb98f;
   border-radius: 9px;
 
   padding: 12px 14px;
 
-  background: #ffffff;
-  color: #111827;
+  background: #fffdf8;
+  color: #1a1a1a;
 
   font-size: 14px;
 
@@ -334,7 +385,8 @@ nav a {
 
   transition:
     border-color 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 }
 
 .form-group input {
@@ -343,6 +395,7 @@ nav a {
 
 .form-group textarea {
   min-height: 150px;
+
   resize: vertical;
 
   line-height: 1.6;
@@ -350,34 +403,45 @@ nav a {
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #9ca3af;
+  color: #a39480;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #2563eb;
+  border-color: #6b4423;
 
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background: #ffffff;
+
+  box-shadow: 0 0 0 3px rgba(107, 68, 35, 0.1);
 }
+
+
+/* Disabled textarea */
 
 .form-group textarea:disabled {
-  background: #f3f4f6;
-  color: #9ca3af;
+  background: #eee2ce;
+  color: #8c7a63;
   cursor: not-allowed;
 }
+
+
+/* Form button */
 
 .todo-form > .add-todo-btn {
   width: 100%;
   margin-top: 5px;
 }
 
-   /* CURRENT TASKS */
+
+/* =========================================================
+   CURRENT TASKS
+========================================================= */
 
 .form-todo-list {
   margin-top: 28px;
   padding-top: 22px;
 
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px dashed #cdb98f;
 }
 
 .form-list-header {
@@ -387,7 +451,8 @@ nav a {
 }
 
 .form-list-header h2 {
-  color: #374151;
+  color: #4a3c2e;
+
   font-size: 16px;
   font-weight: 650;
 }
@@ -404,37 +469,48 @@ nav a {
 
   border-radius: 999px;
 
-  background: #eff6ff;
-  color: #2563eb;
+  background: #e9dcc0;
+  color: #4a2e17;
 
   font-size: 13px;
   font-weight: 700;
 }
 
-   /* TODO LIST PAGE */
+
+/* =========================================================
+   TODO LIST PAGE
+========================================================= */
 
 .todo-list-page {
   padding: 50px 0;
 }
 
+
+/* Header */
+
 .todo-list-header {
   margin-bottom: 25px;
+  text-align: center;
 }
 
 .todo-list-header h1 {
   margin-bottom: 8px;
 
-  color: #111827;
+  color: #1a1a1a;
+
   font-size: 32px;
   font-weight: 750;
 }
 
 .todo-list-header p {
-  color: #64748b;
+  color: #4a3c2e;
   font-size: 15px;
 }
 
-   /* FILTER */
+
+/* =========================================================
+   FILTER
+========================================================= */
 
 .todo-filters {
   display: flex;
@@ -443,18 +519,19 @@ nav a {
 
   padding: 16px 18px;
 
-  background: #ffffff;
+  background: #fdf8ee;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid #cdb98f;
   border-radius: 12px;
 
   margin-bottom: 15px;
 
-  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+  box-shadow: 0 4px 15px rgba(74, 46, 23, 0.05);
 }
 
 .todo-filters label {
-  color: #374151;
+  color: #4a3c2e;
+
   font-size: 14px;
   font-weight: 650;
 }
@@ -464,11 +541,11 @@ nav a {
 
   padding: 9px 35px 9px 12px;
 
-  border: 1px solid #d1d5db;
+  border: 1px solid #cdb98f;
   border-radius: 8px;
 
-  background: #ffffff;
-  color: #374151;
+  background: #fffdf8;
+  color: #4a3c2e;
 
   font-size: 14px;
 
@@ -478,31 +555,40 @@ nav a {
 }
 
 .todo-filters select:focus {
-  border-color: #2563eb;
+  border-color: #6b4423;
 
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 3px rgba(107, 68, 35, 0.1);
 }
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
 
 .todo-list-summary {
   margin-bottom: 12px;
 
-  color: #64748b;
+  color: #8c7a63;
 
   font-size: 13px;
 }
 
+
+/* =========================================================
+   TABLE
+========================================================= */
 
 .todo-table-container {
   width: 100%;
 
   overflow-x: auto;
 
-  background: #ffffff;
+  background: #fdf8ee;
 
-  border: 1px solid #e5e7eb;
+  border: 1px solid #cdb98f;
   border-radius: 14px;
 
-  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 8px 25px rgba(74, 46, 23, 0.07);
 }
 
 .todo-table {
@@ -513,16 +599,19 @@ nav a {
   table-layout: fixed;
 }
 
+
+/* Table Header */
+
 .todo-table thead {
-  background: #f8fafc;
+  background: #e9dcc0;
 }
 
 .todo-table th {
   padding: 15px 16px;
 
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 2px solid #cdb98f;
 
-  color: #475569;
+  color: #4a3c2e;
 
   font-size: 12px;
   font-weight: 750;
@@ -532,6 +621,8 @@ nav a {
   letter-spacing: 0.5px;
 }
 
+
+/* Column widths */
 
 .todo-table th:nth-child(1) {
   width: 7%;
@@ -554,69 +645,104 @@ nav a {
 }
 
 
+/* =========================================================
+   TABLE ROWS
+   No hover effect
+========================================================= */
+
 .todo-table tbody tr {
-  transition: background-color 0.2s ease;
+  background: transparent;
 }
 
-.todo-table tbody tr:hover {
-  background: #f8fafc;
-}
+
+/* Table cells */
 
 .todo-table td {
   padding: 17px 16px;
 
-  border-bottom: 1px solid #eef2f7;
+  border-bottom: 1px solid #e2d3b4;
 
   vertical-align: middle;
+
+  color: #4a3c2e;
 
   font-size: 14px;
 }
 
 
-/* ID */
+/* =========================================================
+   ID
+========================================================= */
 
 .todo-id {
-  color: #64748b;
+  color: #8c7a63;
+
   font-weight: 650;
 }
 
 
-/* Title */
+/* =========================================================
+   TITLE
+========================================================= */
 
 .todo-title {
-  color: #1f2937;
+  color: #1a1a1a;
+
   font-weight: 650;
 
   word-break: break-word;
 }
 
 
-/* Description */
+/* =========================================================
+   DESCRIPTION
+========================================================= */
 
 .todo-description {
   max-width: 0;
 
-  color: #64748b;
+  color: #6b5a48;
 
   line-height: 1.55;
 
   white-space: normal;
   overflow-wrap: anywhere;
   word-break: break-word;
+
+  text-decoration: none;
 }
 
 
-/* Completed row */
+/* =========================================================
+   COMPLETED ROW
+========================================================= */
 
 .todo-table tr.completed {
-  background: #f8fafc;
+  background: #f7eddc;
 }
 
+
+/* Only title gets line-through */
+
 .todo-table tr.completed .todo-title {
-  color: #94a3b8;
+  color: #8c7a63;
+
   text-decoration: line-through;
 }
 
+
+/* Description stays normal */
+
+.todo-table tr.completed .todo-description {
+  color: #6b5a48;
+
+  text-decoration: none;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
 
 .status-wrapper {
   display: inline-flex;
@@ -628,7 +754,7 @@ nav a {
   width: 17px;
   height: 17px;
 
-  accent-color: #2563eb;
+  accent-color: #6b4423;
 
   cursor: pointer;
 }
@@ -652,6 +778,11 @@ nav a {
   color: #047857;
 }
 
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
 .todo-actions {
   white-space: nowrap;
 }
@@ -670,6 +801,9 @@ nav a {
     transform 0.2s ease;
 }
 
+
+/* Edit */
+
 .todo-actions button:first-child {
   margin-right: 8px;
 
@@ -679,8 +813,12 @@ nav a {
 
 .todo-actions button:first-child:hover {
   background: #dbeafe;
+
   transform: translateY(-1px);
 }
+
+
+/* Delete */
 
 .todo-actions button:last-child {
   background: #fef2f2;
@@ -689,15 +827,21 @@ nav a {
 
 .todo-actions button:last-child:hover {
   background: #fee2e2;
+
   transform: translateY(-1px);
 }
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
 
 .empty-todo-state {
   padding: 70px 30px;
 
-  background: #ffffff;
+  background: #fdf8ee;
 
-  border: 1px dashed #cbd5e1;
+  border: 1px dashed #cdb98f;
   border-radius: 14px;
 
   text-align: center;
@@ -706,16 +850,21 @@ nav a {
 .empty-todo-state h2 {
   margin-bottom: 8px;
 
-  color: #334155;
+  color: #4a3c2e;
 
   font-size: 20px;
 }
 
 .empty-todo-state p {
-  color: #94a3b8;
+  color: #8c7a63;
+
   font-size: 14px;
 }
 
+
+/* =========================================================
+   DELETE MODAL
+========================================================= */
 
 .delete-modal-backdrop {
   position: fixed;
@@ -728,7 +877,7 @@ nav a {
 
   padding: 20px;
 
-  background: rgba(15, 23, 42, 0.55);
+  background: rgba(55, 35, 20, 0.62);
 
   backdrop-filter: blur(4px);
 }
@@ -740,9 +889,10 @@ nav a {
 
   background: #ffffff;
 
+  border: 1px solid #cdb98f;
   border-radius: 16px;
 
-  box-shadow: 0 25px 60px rgba(15, 23, 42, 0.25);
+  box-shadow: 0 25px 60px rgba(55, 35, 20, 0.3);
 
   animation: modalEnter 0.2s ease-out;
 }
@@ -750,14 +900,15 @@ nav a {
 .delete-modal h2 {
   margin-bottom: 10px;
 
-  color: #111827;
+  color: #1a1a1a;
+
   font-size: 22px;
 }
 
 .delete-modal p {
   margin-bottom: 25px;
 
-  color: #64748b;
+  color: #6b5a48;
 
   font-size: 14px;
   line-height: 1.6;
@@ -779,6 +930,9 @@ nav a {
   font-weight: 650;
 }
 
+
+/* Cancel */
+
 .delete-modal-actions button:first-child {
   background: #f1f5f9;
   color: #475569;
@@ -787,6 +941,9 @@ nav a {
 .delete-modal-actions button:first-child:hover {
   background: #e2e8f0;
 }
+
+
+/* Delete */
 
 .delete-modal-actions button:last-child {
   background: #dc2626;
@@ -797,11 +954,6 @@ nav a {
   background: #b91c1c;
 }
 
-
-/* =========================================================
-   ANIMATION
-========================================================= */
-
 @keyframes modalEnter {
   from {
     opacity: 0;
@@ -811,114 +963,5 @@ nav a {
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
-  }
-}
-
-
-/* =========================================================
-   RESPONSIVE - TABLET
-========================================================= */
-
-@media (max-width: 850px) {
-  .dashboard-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .todo-table {
-    min-width: 850px;
-  }
-
-  .todo-table-container {
-    overflow-x: auto;
-  }
-}
-
-
-/* =========================================================
-   RESPONSIVE - MOBILE
-========================================================= */
-
-@media (max-width: 600px) {
-  nav {
-    justify-content: flex-start;
-    overflow-x: auto;
-    white-space: nowrap;
-
-    padding: 10px 14px;
-  }
-
-  nav a {
-    font-size: 13px;
-    padding: 8px 11px;
-  }
-
-  .todo-dashboard,
-  .todo-form-page,
-  .todo-list-page {
-    width: min(100% - 24px, 1180px);
-    padding: 30px 0;
-  }
-
-  .dashboard-header {
-    padding: 25px 20px;
-  }
-
-  .dashboard-header h1 {
-    font-size: 28px;
-  }
-
-  .dashboard-header p {
-    font-size: 14px;
-    line-height: 1.7;
-  }
-
-  .dashboard-stats {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-
-  .stat-card,
-  .stat-card-clickable {
-    padding: 22px;
-  }
-
-  .btn {
-    justify-content: stretch;
-  }
-
-  .btn .add-todo-btn {
-    width: 100%;
-  }
-
-  .todo-form-header h1,
-  .todo-list-header h1 {
-    font-size: 27px;
-  }
-
-  .todo-form {
-    padding: 22px 18px;
-    border-radius: 14px;
-  }
-
-  .todo-filters {
-    align-items: stretch;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .todo-filters select {
-    width: 100%;
-  }
-
-  .delete-modal {
-    padding: 24px;
-  }
-
-  .delete-modal-actions {
-    flex-direction: column-reverse;
-  }
-
-  .delete-modal-actions button {
-    width: 100%;
   }
 }
