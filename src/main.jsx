@@ -6,7 +6,7 @@ import "./app.css";
 
 createRoot(document.getElementById("root")).render(
     <StrictMode>
-        <BrowserRouter>
+        <BrowserRouter basename="/ToDo_App">
             <App />
         </BrowserRouter>
     </StrictMode>
